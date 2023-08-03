@@ -13,7 +13,7 @@ const Login: React.FC = () => {
 
         <div>
           <Label htmlFor="">Sua senha secreta</Label>
-          <Input type="text" placeholder="Digite sua senha" />
+          <Input type="password" placeholder="Digite sua senha" />
         </div>
 
         <Button>Fazer Login</Button>

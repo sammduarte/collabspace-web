@@ -1,5 +1,23 @@
+import Header from "../../components/Header";
+import ProfileCard from "../../components/ProfileCard";
+import Post from "../../components/Posts";
+
+import { Container, Content, Posts } from "./styles";
+
 const Feed: React.FC = () => {
-  return <p>Feed</p>;
+  return (
+    <Container>
+      <Header />
+
+      <Content>
+        <ProfileCard />
+
+        <Posts>
+          <Post />
+        </Posts>
+      </Content>
+    </Container>
+  );
 };
 
 export default Feed;
