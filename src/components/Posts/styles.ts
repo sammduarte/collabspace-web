@@ -5,87 +5,45 @@ export const Container = styled.div`
   padding: 40px;
   background: var(--zinc-800);
   border-radius: 8px;
+`;
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+export const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    div {
-      display: flex;
-      gap: 1rem;
+  time {
+    color: var(--zinc-500);
+    font-size: 0.875rem;
+  }
+`;
 
-      section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+export const Author = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
-        h1 {
-          font-size: 1rem;
-          color: var(--zinc-200);
-        }
+export const AuthorInfo = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-        p {
-          font-size: 0.875rem;
-          color: var(--zinc-500);
-        }
-      }
-    }
-
-    p {
-      color: var(--zinc-500);
-      font-size: 0.875rem;
-    }
+  h1 {
+    font-size: 1rem;
+    color: var(--zinc-200);
   }
 
-  main {
-    margin-top: 1.5rem;
-  }
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    h1 {
-      font-size: 1rem;
-      color: var(--zinc-200);
-    }
-
-    textarea {
-      width: 100%;
-      font-size: 0.875rem;
-      color: var(--zinc-300);
-      background: var(--zinc-900);
-      border: 0;
-      outline: 0;
-      resize: none;
-      height: 6rem;
-      padding: 1rem;
-      border-radius: 8px;
-
-      &:focus {
-        outline: 1px solid var(--emerald-500);
-      }
-    }
-
-    button {
-      width: 150px;
-      padding: 0.75rem 1rem;
-      background: var(--emerald-600);
-      color: var(--zinc-200);
-      font-size: 1rem;
-      font-weight: bold;
-      border: 0;
-      outline: 0;
-      border-radius: 8px;
-
-      cursor: pointer;
-    }
+  p {
+    font-size: 0.875rem;
+    color: var(--zinc-500);
   }
 `;
 
 export const Content = styled.div`
+  margin-top: 1.5rem;
+`;
+
+export const Description = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -120,3 +78,53 @@ export const Divider = styled.div`
   background: var(--zinc-700);
   margin: 2rem 0;
 `;
+
+export const CommentForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1rem;
+    color: var(--zinc-200);
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 0.875rem;
+    color: var(--zinc-300);
+    background: var(--zinc-900);
+    border: 0;
+    outline: 0;
+    resize: none;
+    height: 6rem;
+    padding: 1rem;
+    border-radius: 8px;
+
+    &:focus {
+      outline: 1px solid var(--emerald-500);
+    }
+  }
+
+  button {
+    width: 150px;
+    padding: 0.75rem 1rem;
+    background: var(--emerald-600);
+    color: var(--zinc-200);
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid var(--emerald-600);
+    outline: 0;
+    border-radius: 8px;
+    transition: all 0.25s;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--emerald-600);
+      background: transparent;
+    }
+  }
+`;
+
+export const Comments = styled.div``;
