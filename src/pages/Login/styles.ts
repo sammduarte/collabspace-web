@@ -22,13 +22,13 @@ export const Form = styled.form`
     font-weight: 600;
     margin-bottom: 2.5rem;
   }
+`;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-  }
+export const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 `;
 
 export const Label = styled.label`
