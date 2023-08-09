@@ -11,6 +11,8 @@ import {
   Hashtags,
   Divider,
   CommentForm,
+  InputArea,
+  ButtonComment,
   Comments,
 } from "./styles";
 
@@ -19,7 +21,10 @@ const Post: React.FC = () => {
     <Container>
       <Header>
         <Author>
-          <Avatar />
+          <Avatar
+            src="https://yt3.googleusercontent.com/YLs7Lr-nZ4a5dFVlc2I0Ehm_TdbzbTzzutJCh2RKpobdxvGO41qZMs6CbKdiQf5KaE4IZkwt2Q=s900-c-k-c0x00ffffff-no-rj"
+            borderEffect
+          />
 
           <AuthorInfo>
             <h1>Matheus ASMR</h1>
@@ -34,7 +39,7 @@ const Post: React.FC = () => {
         <Description>
           <p>Bom dia Galera 👋</p>
           <p>
-            Acordei, vesti meu aclinho, vesti meu bonezinho e fui logo tomando
+            Acordei, vesti meu oclinho, vesti meu bonezinho e fui logo tomando
             aquele copão insano de (3 pontinhos). Hoje eu acordei com muita fome
             galera, então vou aproveitar o resto de lasanha de ontem e já vou
             AMASSAR! 🍗
@@ -52,9 +57,9 @@ const Post: React.FC = () => {
       <CommentForm>
         <h1>Deixe seu comentário</h1>
 
-        <textarea name=""></textarea>
+        <InputArea name=""></InputArea>
 
-        <button>Comentar</button>
+        <ButtonComment>Comentar</ButtonComment>
       </CommentForm>
 
       <Divider />
