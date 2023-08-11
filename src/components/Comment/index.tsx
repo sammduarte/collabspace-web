@@ -11,7 +11,7 @@ const Comment: React.FC = () => {
 
       <CommentBox>
         <AuthorAndTime>
-          <h1>Matheus ASMR</h1>
+          <h1>Mateus ASMR</h1>
           <time>Cerca de 2h</time>
 
           <ButtonDelete>

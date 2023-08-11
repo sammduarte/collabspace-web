@@ -25,8 +25,8 @@ const ProfileCard: React.FC = () => {
       </Header>
 
       <Content>
-        <h1>Matheus ASMR</h1>
-        <p>@matheus3pontinhos</p>
+        <h1>Mateus ASMR</h1>
+        <p>@mateusasmr</p>
       </Content>
 
       <Divider />
