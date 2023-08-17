@@ -8,6 +8,10 @@ interface AreaPasswordProps {
   $areaPassword: boolean;
 }
 
+interface PasswordMeterProps {
+  $isWeak: boolean;
+}
+
 export const Container = styled.div`
   min-width: 100vw;
   min-height: 100vh;
@@ -23,13 +27,13 @@ export const Form = styled.form`
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  margin: 2.5rem 0;
+  margin: 4rem 0;
 
   h1 {
     color: var(--zinc-100);
     font-size: 3rem;
     font-weight: 600;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 
   input[type="date"] {
@@ -39,6 +43,16 @@ export const Form = styled.form`
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(66.66%);
   }
+`;
+
+export const ErrorAlert = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--red-500);
+  color: var(--red-500);
+  margin-bottom: 1.5rem;
 `;
 
 export const Group = styled.div`
@@ -72,7 +86,6 @@ export const AreaEmail = styled(Group)<AreaEmailProps>`
   max-height: 150px;
   transition: 0.3s ease;
   overflow: hidden;
-
   ${({ $areaEmail }) =>
     $areaEmail &&
     css`
@@ -81,7 +94,7 @@ export const AreaEmail = styled(Group)<AreaEmailProps>`
 `;
 
 export const AreaPassword = styled(Group)<AreaPasswordProps>`
-  max-height: 150px;
+  max-height: 170px;
   transition: 0.3s ease;
   overflow: hidden;
 
@@ -89,6 +102,36 @@ export const AreaPassword = styled(Group)<AreaPasswordProps>`
     $areaPassword &&
     css`
       height: 0;
+    `}
+`;
+
+export const PasswordMeter = styled.div<PasswordMeterProps>`
+  height: 2px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  text-align: ${({ $isWeak }) => ($isWeak ? "left" : "right")};
+  margin-bottom: 0.5rem;
+
+  background: var(--zinc-300);
+
+  &::after {
+    content: "Senha fraca!";
+    display: block;
+    padding-top: 2px;
+    color: var(--zinc-300);
+  }
+
+  ${({ $isWeak }) =>
+    !$isWeak &&
+    css`
+      background: var(--emerald-600);
+
+      &::after {
+        content: "Senha forte!";
+        display: block;
+        padding-top: 2px;
+        color: var(--emerald-600);
+      }
     `}
 `;
 
