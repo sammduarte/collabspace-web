@@ -18,7 +18,7 @@ import {
   InteractionInfo,
   CountReaction,
   CountComment,
-  InteracionAction,
+  InteractionAction,
   ButtonAction,
   CommentArea,
   CommentForm,
@@ -27,10 +27,10 @@ import {
 import { useState } from "react";
 
 const Post: React.FC = () => {
-  const [commentArea, sethCommentArea] = useState(false);
+  const [commentArea, setCommentArea] = useState(false);
 
   function toggleCommentArea() {
-    sethCommentArea(!commentArea);
+    setCommentArea(!commentArea);
   }
 
   return (
@@ -38,13 +38,13 @@ const Post: React.FC = () => {
       <Header>
         <Author>
           <Avatar
-            src="https://i.ytimg.com/vi/KVCiR_hk_34/oar2.jpg?sqp=-oaymwEVCJUDENAFSFryq4qpAwcIARUAAIhC&rs=AOn4CLBmC8QI6Wy98pg6Lawvy-1_yWOcgA"
+            src="https://b.fssta.com/uploads/application/soccer/headshots/713.png"
             borderEffect
           />
 
           <AuthorInfo>
-            <h1>Irmão do Mateus ASMR</h1>
-            <p>@irmaodomateusasmr</p>
+            <h1>Neymar Jr</h1>
+            <p>ney@hotney.com</p>
           </AuthorInfo>
         </Author>
 
@@ -53,17 +53,17 @@ const Post: React.FC = () => {
 
       <Content>
         <Description>
-          <p>Bom dia galeraaa 👋</p>
+          <p>Fala galeraa 👋</p>
           <p>
-            Acordei e já fui pra casa do meu irmão levar uma barca de sushi pra
-            gente amassar! Não somos muito fãs, mas não perdoamos nem peixe crú!
-            🍣
+            Você pode sempre sonhar, e seus sonhos se tornarão sonhos, e a
+            realidade se tornará realidade. Mas é você que tem que torná-los
+            realidade. 🚀
           </p>
         </Description>
 
         <Hashtags>
           <span>#collabspace</span>
-          <span>#AMASSA</span>
+          <span>#confia</span>
         </Hashtags>
       </Content>
 
@@ -81,7 +81,7 @@ const Post: React.FC = () => {
           </CountComment>
         </InteractionInfo>
 
-        <InteracionAction>
+        <InteractionAction>
           <ButtonAction>
             <ThumbsUp size={22} />
             Reagir
@@ -91,7 +91,7 @@ const Post: React.FC = () => {
             <ChatCircleText size={22} />
             Comentar
           </ButtonAction>
-        </InteracionAction>
+        </InteractionAction>
       </Interactions>
 
       <CommentArea $commentArea={commentArea}>

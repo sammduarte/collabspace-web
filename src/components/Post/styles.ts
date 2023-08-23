@@ -17,8 +17,8 @@ export const Header = styled.header`
   justify-content: space-between;
 
   time {
-    color: var(--zinc-500);
     font-size: 0.875rem;
+    color: var(--zinc-500);
   }
 `;
 
@@ -124,7 +124,7 @@ export const CountReaction = styled.div`
 
 export const CountComment = styled.div``;
 
-export const InteracionAction = styled.div`
+export const InteractionAction = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;

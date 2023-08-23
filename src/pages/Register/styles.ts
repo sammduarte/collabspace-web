@@ -13,7 +13,7 @@ interface PasswordMeterProps {
 }
 
 export const Container = styled.div`
-  min-width: 100vw;
+  width: 100vw;
   min-height: 100vh;
   background: var(--zinc-900);
 
@@ -70,7 +70,7 @@ export const Label = styled.label`
 export const Input = styled.input`
   height: 48px;
   background: var(--zinc-800);
-  color: var(--zinc-100);
+  color: var(--zinc-300);
   font-size: 1rem;
   padding: 1.25rem 1rem;
   border-radius: 4px;
@@ -78,7 +78,7 @@ export const Input = styled.input`
   outline: 0;
 
   ::placeholder {
-    color: var(--zinc-500);
+    color: ar(--zinc-500);
   }
 `;
 
@@ -86,10 +86,11 @@ export const AreaEmail = styled(Group)<AreaEmailProps>`
   max-height: 150px;
   transition: 0.3s ease;
   overflow: hidden;
+
   ${({ $areaEmail }) =>
     $areaEmail &&
     css`
-      height: 0;
+      max-height: 0;
     `}
 `;
 
@@ -101,8 +102,8 @@ export const AreaPassword = styled(Group)<AreaPasswordProps>`
   ${({ $areaPassword }) =>
     $areaPassword &&
     css`
-      height: 0;
-    `}
+      max-height: 0;
+    `};
 `;
 
 export const PasswordMeter = styled.div<PasswordMeterProps>`
@@ -115,7 +116,7 @@ export const PasswordMeter = styled.div<PasswordMeterProps>`
   background: var(--zinc-300);
 
   &::after {
-    content: "Senha fraca!";
+    content: "Senha fraca";
     display: block;
     padding-top: 2px;
     color: var(--zinc-300);
@@ -127,7 +128,7 @@ export const PasswordMeter = styled.div<PasswordMeterProps>`
       background: var(--emerald-600);
 
       &::after {
-        content: "Senha forte!";
+        content: "Senha forte";
         display: block;
         padding-top: 2px;
         color: var(--emerald-600);
@@ -142,6 +143,7 @@ export const Button = styled.button`
   font-size: 1.125rem;
   font-weight: bold;
   padding: 0 1rem;
+  margin-bottom: 1.5rem;
   border: 0;
   outline: 0;
   border-radius: 4px;
@@ -156,5 +158,25 @@ export const Button = styled.button`
   &:disabled {
     background: var(--zinc-600);
     cursor: not-allowed;
+  }
+`;
+
+export const LinkLogin = styled.div`
+  font-size: 0.875rem;
+  text-align: center;
+
+  p {
+    color: var(--zinc-400);
+  }
+
+  a {
+    color: var(--emerald-500);
+    transition: all 0.15s;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--emerald-600);
+    }
   }
 `;

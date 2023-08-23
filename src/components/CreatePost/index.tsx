@@ -9,11 +9,11 @@ const CreatePost: React.FC = () => {
     <Container>
       <Content>
         <Avatar
-          src="https://yt3.googleusercontent.com/YLs7Lr-nZ4a5dFVlc2I0Ehm_TdbzbTzzutJCh2RKpobdxvGO41qZMs6CbKdiQf5KaE4IZkwt2Q=s900-c-k-c0x00ffffff-no-rj"
+          src="https://i.pinimg.com/736x/b7/65/02/b76502e936cd209b595bd7a537e74db4.jpg"
           borderEffect
         />
 
-        <InputArea placeholder="O que temos para hoje? ..." rows={1} />
+        <InputArea rows={2} placeholder="O que temos para hoje?" />
       </Content>
 
       <Button>Publicar</Button>

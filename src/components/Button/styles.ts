@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Container = styled.button`
   width: 150px;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.5rem;
   background: var(--emerald-600);
   color: var(--zinc-200);
   font-size: 1rem;

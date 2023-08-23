@@ -14,19 +14,19 @@ const ProfileCard: React.FC = () => {
   return (
     <Container>
       <Header>
-        <Cover src="https://i.ytimg.com/vi/ANGDMXXoaIs/maxresdefault.jpg"></Cover>
+        <Cover src="https://cutewallpaper.org/29/dual-screen-mr-robot-wallpaper/247286624.jpg" />
 
         <div>
           <Avatar
-            src="https://yt3.googleusercontent.com/YLs7Lr-nZ4a5dFVlc2I0Ehm_TdbzbTzzutJCh2RKpobdxvGO41qZMs6CbKdiQf5KaE4IZkwt2Q=s900-c-k-c0x00ffffff-no-rj"
+            src="https://i.pinimg.com/736x/b7/65/02/b76502e936cd209b595bd7a537e74db4.jpg"
             borderEffect
           />
         </div>
       </Header>
 
       <Content>
-        <h1>Mateus ASMR</h1>
-        <p>@mateusasmr</p>
+        <h1>Natan Foleto</h1>
+        <p>natanfoleto@hotmail.com</p>
       </Content>
 
       <Divider />

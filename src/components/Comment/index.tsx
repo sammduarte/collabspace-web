@@ -7,11 +7,11 @@ import { Container, CommentBox, AuthorAndTime, ButtonDelete } from "./styles";
 const Comment: React.FC = () => {
   return (
     <Container>
-      <Avatar src="https://yt3.googleusercontent.com/YLs7Lr-nZ4a5dFVlc2I0Ehm_TdbzbTzzutJCh2RKpobdxvGO41qZMs6CbKdiQf5KaE4IZkwt2Q=s900-c-k-c0x00ffffff-no-rj" />
+      <Avatar src="https://media.fstatic.com/DH5yngg4vQQdK9csLNLAzsPJ9N8=/full-fit-in/290x478/filters:format(webp)/media/artists/avatar/2022/12/naldo-benny_a305866.jpg" />
 
       <CommentBox>
         <AuthorAndTime>
-          <h1>Mateus ASMR</h1>
+          <h1>Naldo Beny</h1>
           <time>Cerca de 2h</time>
 
           <ButtonDelete>
@@ -20,8 +20,8 @@ const Comment: React.FC = () => {
         </AuthorAndTime>
 
         <p>
-          Meu irmão é insano galera, o moleque trouxe uma barca de sushi pra
-          gente amassar!! Mais tarde sai vídeo novo no canal, não percam!! 🍣
+          Ai Ney, ta ligado que o LeBroun ficou impressionado com a cor do meu
+          tênis la em Miami 😎
         </p>
       </CommentBox>
     </Container>
