@@ -15,12 +15,6 @@ export const User = styled.div`
   gap: 1rem;
 `;
 
-export const Avatar = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 100%;
-`;
-
 export const Info = styled.div`
   overflow: hidden;
 

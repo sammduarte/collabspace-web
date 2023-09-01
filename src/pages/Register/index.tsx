@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { createUser } from "../../services/users";
+import { useAuthentication } from "../../contexts/Authentication";
+
+import { Spiner } from "../../assets/sources";
 
 import {
   Container,
@@ -16,6 +22,8 @@ import {
 } from "./styles";
 
 const Register: React.FC = () => {
+  const { handleLoggedEmail } = useAuthentication();
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -24,6 +32,8 @@ const Register: React.FC = () => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const areaEmail = !name || !birthDate;
   const areaPassword = !email || !confirmEmail || areaEmail;
@@ -36,13 +46,58 @@ const Register: React.FC = () => {
     /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
   );
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     navigate("/");
-  };
+  }, [navigate]);
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+
+      setLoading(true);
+
+      try {
+        const { result, message, data } = await createUser({
+          name,
+          email,
+          confirmEmail,
+          password,
+          confirmPassword,
+          birthDate,
+        });
+
+        if (result === "success") {
+          if (data) {
+            toast.success(message);
+
+            handleLoggedEmail(data.email);
+            handleLogin();
+          }
+        }
+
+        if (result === "error") toast.error(message);
+
+        setLoading(false);
+      } catch (error: any) {
+        toast.error(error.message);
+        setLoading(false);
+      }
+    },
+    [
+      birthDate,
+      confirmEmail,
+      confirmPassword,
+      email,
+      name,
+      password,
+      handleLogin,
+      handleLoggedEmail,
+    ],
+  );
 
   return (
     <Container>
-      <Form autoComplete="on">
+      <Form autoComplete="on" onSubmit={handleSubmit}>
         <h1>Cadastre-se</h1>
 
         {email && !isEmail && <ErrorAlert>O e-mail não é válido!</ErrorAlert>}
@@ -156,7 +211,7 @@ const Register: React.FC = () => {
             !isPasswordStrong
           }
         >
-          Cadastrar
+          {loading ? <Spiner /> : "Cadastrar"}
         </Button>
 
         <LinkLogin>

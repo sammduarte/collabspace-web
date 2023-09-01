@@ -53,6 +53,10 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   height: 48px;
   background: var(--emerald-600);
   color: var(--zinc-100);

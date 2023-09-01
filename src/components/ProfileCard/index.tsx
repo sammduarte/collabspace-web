@@ -1,3 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
+import { useAuthentication } from "../../contexts/Authentication";
+
 import {
   Container,
   Header,
@@ -8,25 +12,33 @@ import {
   Footer,
 } from "./styles";
 
-import Avatar from "../Avatar";
+import AvatarSquare from "../AvatarSquare";
 
 const ProfileCard: React.FC = () => {
+  const { user } = useAuthentication();
+
+  const navigate = useNavigate();
+
+  const handleMe = () => {
+    if (user) navigate(`/me/${user.id}`);
+  };
+
   return (
     <Container>
       <Header>
-        <Cover src="https://cutewallpaper.org/29/dual-screen-mr-robot-wallpaper/247286624.jpg" />
+        <Cover src={"https://i.imgur.com/gH2QLjf.png"} />
 
-        <div>
-          <Avatar
-            src="https://i.pinimg.com/736x/b7/65/02/b76502e936cd209b595bd7a537e74db4.jpg"
+        <div onClick={handleMe}>
+          <AvatarSquare
+            src={user?.avatarUrl || "https://i.imgur.com/HYrZqHy.jpg"}
             borderEffect
           />
         </div>
       </Header>
 
       <Content>
-        <h1>Natan Foleto</h1>
-        <p>natanfoleto@hotmail.com</p>
+        <h1 onClick={handleMe}>{user?.name}</h1>
+        <p>{user?.email}</p>
       </Content>
 
       <Divider />

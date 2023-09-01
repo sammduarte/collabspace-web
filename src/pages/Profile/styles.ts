@@ -19,6 +19,11 @@ export const Overview = styled.div``;
 
 export const UserBanner = styled.div`
   position: relative;
+
+  div {
+    margin-top: -152px;
+    margin-left: 2rem;
+  }
 `;
 
 export const EditCoverButton = styled.button`
@@ -29,7 +34,7 @@ export const EditCoverButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 6px;
   border-radius: 100%;
   border: 0;
   outline: 0;
@@ -40,8 +45,8 @@ export const EditCoverButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: var(--emerald-600);
-    color: var(--zinc-200);
+    background: var(--zinc-300);
+    color: var(--emerald-600);
   }
 `;
 
@@ -51,16 +56,6 @@ export const Cover = styled.img`
   height: 192px;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
-`;
-
-export const Avatar = styled.img`
-  display: block;
-  width: 192px;
-  height: 192px;
-  border-radius: 100%;
-  object-fit: cover;
-  margin-top: -152px;
-  margin-left: 2rem;
 `;
 
 export const EditInfoButton = styled.button`

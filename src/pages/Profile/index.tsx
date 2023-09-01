@@ -1,5 +1,11 @@
+import { useCallback, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import moment from "moment";
+import { toast } from "react-toastify";
+
 import LayoutDefault from "../../layouts/Default";
 
+import AvatarCircle from "../../components/AvatarCircle";
 import RequestFriend from "../../components/RequestFriend";
 import FriendCard from "../../components/FriendCard";
 
@@ -11,7 +17,6 @@ import {
   Overview,
   UserBanner,
   Cover,
-  Avatar,
   EditCoverButton,
   UserInfo,
   EditInfoButton,
@@ -26,7 +31,44 @@ import {
   RequestList,
 } from "./styles";
 
+import { listUserById } from "../../services/users";
+import { IUser } from "../../services/users/types";
+import { useAuthentication } from "../../contexts/Authentication";
+
+moment.defineLocale("pt-br", {
+  weekdays: "Segunda_Terça_Quarta_Quinta_Sexta_Sábado_Domingo".split("_"),
+  months:
+    "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
+      "_",
+    ),
+});
+
 const Profile: React.FC = () => {
+  const { id } = useParams();
+  const { signOut } = useAuthentication();
+
+  const [user, setUser] = useState<IUser | null>(null);
+
+  const handleListUserById = useCallback(async () => {
+    try {
+      if (id) {
+        const { result, message, data } = await listUserById({ id });
+
+        if (result === "success") {
+          if (data) setUser(data.user);
+        }
+
+        if (result === "error") toast.error(message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    handleListUserById();
+  }, [id, handleListUserById]);
+
   return (
     <LayoutDefault>
       <Container>
@@ -37,9 +79,15 @@ const Profile: React.FC = () => {
                 <Camera size={22} weight="fill" />
               </EditCoverButton>
 
-              <Cover src="https://cutewallpaper.org/29/dual-screen-mr-robot-wallpaper/247286624.jpg" />
+              <Cover src={"https://i.imgur.com/gH2QLjf.png"} />
 
-              <Avatar src="https://i.pinimg.com/736x/b7/65/02/b76502e936cd209b595bd7a537e74db4.jpg" />
+              <div>
+                <AvatarCircle
+                  size="192px"
+                  src={user?.avatarUrl || "https://i.imgur.com/HYrZqHy.jpg"}
+                />
+              </div>
+
               <EditInfoButton>
                 <PencilSimple size={22} weight="bold" />
               </EditInfoButton>
@@ -47,10 +95,10 @@ const Profile: React.FC = () => {
 
             <UserInfo>
               <General>
-                <h1>Samuel Duarte</h1>
+                <h1>{user?.name}</h1>
                 <p>
-                  Você só vai me olhar, me julgar, tirar conclusões
-                  precipitadas, mas ainda… assim não vai me conhecer.
+                  Quem quebra as regras pode ser considerado lixo, mas quem
+                  abandona seus amigos é pior que lixo.
                 </p>
 
                 <Total>
@@ -69,14 +117,16 @@ const Profile: React.FC = () => {
                   Jaborandi, São Paulo, Brasil
                 </span>
 
-                <span>
-                  <Phone size={20} weight="bold" />
-                  (17) 99242-4418
-                </span>
+                {user?.telephone && (
+                  <span>
+                    <Phone size={20} weight="bold" />
+                    (17) 98115-6716
+                  </span>
+                )}
 
                 <span>
                   <Clock size={20} weight="bold" />
-                  Entrou em Fevereiro de 2023
+                  {moment(user?.createdAt).format("[Entrou em] MMMM [de] YYYY")}
                 </span>
               </Contact>
             </UserInfo>
@@ -118,6 +168,10 @@ const Profile: React.FC = () => {
               <RequestFriend />
             </RequestList>
           </Requests>
+
+          <a style={{ color: "white" }} onClick={signOut}>
+            Sair
+          </a>
         </Sidebar>
       </Container>
     </LayoutDefault>
