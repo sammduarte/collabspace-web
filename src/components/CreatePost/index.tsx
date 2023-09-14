@@ -1,4 +1,5 @@
 import { useState, useCallback, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Avatar from "../AvatarSquare";
@@ -9,8 +10,14 @@ import { useAuthentication } from "../../contexts/Authentication";
 
 import { Container, Form } from "./styles";
 import { createPost } from "../../services/posts";
+import { IPost } from "../../services/posts/types";
 
-const CreatePost: React.FC = () => {
+interface CreatePostProps {
+  onCreatePost: (post: IPost) => void;
+}
+
+const CreatePost: React.FC<CreatePostProps> = ({ onCreatePost }) => {
+  const navigate = useNavigate();
   const { user } = useAuthentication();
 
   const [content, setContent] = useState<string>("");
@@ -20,20 +27,32 @@ const CreatePost: React.FC = () => {
       e.preventDefault();
 
       try {
-        const { result, message } = await createPost({ content });
+        const { result, message, data } = await createPost({ content });
 
-        if (result === "success") toast.success(message);
+        if (result === "success") {
+          if (data) {
+            setContent("");
+            onCreatePost(data);
+            toast.success(message);
+          }
+        }
+
         if (result === "error") toast.error(message);
       } catch (error: any) {
         toast.error(error.message);
       }
     },
-    [content],
+    [content, onCreatePost],
   );
+
+  const handleMe = () => {
+    if (user) navigate(`/me/${user.id}`);
+  };
 
   return (
     <Container>
       <Avatar
+        onClick={handleMe}
         src={user?.avatarUrl || "https://i.imgur.com/HYrZqHy.jpg"}
         borderEffect
       />
@@ -49,9 +68,9 @@ const CreatePost: React.FC = () => {
             setContent(e.target.value);
           }}
         />
-      </Form>
 
-      <Button>Publicar</Button>
+        <Button>Publicar</Button>
+      </Form>
     </Container>
   );
 };

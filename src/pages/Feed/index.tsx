@@ -29,6 +29,15 @@ const Feed: React.FC = () => {
     }
   }, []);
 
+  const handleAddPost = (post: IPost) =>
+    setPosts((prevState) => {
+      const posts = [...prevState];
+
+      posts.unshift(post);
+
+      return posts;
+    });
+
   useEffect(() => {
     handleListAllPosts();
   }, [handleListAllPosts]);
@@ -39,14 +48,16 @@ const Feed: React.FC = () => {
         <ProfileCard />
 
         <Posts>
-          <CreatePost />
+          <CreatePost onCreatePost={handleAddPost} />
 
           {posts.map((post) => (
             <Post
               key={post.id}
+              authorId={post.user.id}
               authorAvatar={post.user.avatarUrl}
               authorName={post.user.name}
-              authorEmail={post.user.name}
+              authorEmail={post.user.email}
+              postId={post.id}
               content={post.content}
               tags={post.tags}
               comments={post.comments}

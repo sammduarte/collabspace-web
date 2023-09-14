@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
 
   time {
@@ -25,6 +25,10 @@ export const Header = styled.header`
 export const Author = styled.div`
   display: flex;
   gap: 1rem;
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 export const AuthorInfo = styled.section`
@@ -35,6 +39,12 @@ export const AuthorInfo = styled.section`
   h1 {
     font-size: 1rem;
     color: var(--zinc-200);
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   p {
@@ -175,4 +185,8 @@ export const CommentForm = styled.form`
   }
 `;
 
-export const Comments = styled.div``;
+export const Comments = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
