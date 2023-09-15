@@ -7,6 +7,12 @@ export const Container = styled.div`
 
 export const CommentBox = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const InputArea = styled.div`
   background: var(--zinc-900);
   border-radius: 8px;
   padding: 1rem 1rem 1.5rem 1rem;
@@ -37,9 +43,32 @@ export const AuthorAndTime = styled.div`
   }
 
   time {
-    max-width: max-content;
     font-size: 0.75rem;
     color: var(--zinc-500);
+  }
+`;
+
+export const Interactions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+
+  font-size: 0.875rem;
+  color: var(--zinc-400);
+
+  svg {
+    margin-bottom: 2px;
+    color: var(--emerald-600);
+    cursor: pointer;
+  }
+
+  span {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
