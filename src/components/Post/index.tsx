@@ -17,6 +17,7 @@ import AvatarSquare from "../AvatarSquare";
 import Comment from "../Comment";
 import InputArea from "../InputArea";
 import Button from "../Button";
+import Modal from "../Modal";
 
 import {
   Container,
@@ -75,6 +76,8 @@ const Post: React.FC<PostProps> = ({
   const [userReacted, setUserReacted] = useState(
     postReactions.some((reaction) => reaction.user.id === user?.id),
   );
+
+  const [modalReactions, setModalReactions] = useState(false);
 
   const handleCreateComment = useCallback(
     async (e: FormEvent) => {
@@ -189,6 +192,10 @@ const Post: React.FC<PostProps> = ({
     setCommentArea(!commentArea);
   }
 
+  function toggleModalReactions() {
+    setModalReactions(!modalReactions);
+  }
+
   function handleMe() {
     navigate(`/me/${authorId}`);
   }
@@ -226,7 +233,7 @@ const Post: React.FC<PostProps> = ({
 
       <Interactions>
         <InteractionInfo>
-          <CountReaction>
+          <CountReaction onClick={toggleModalReactions}>
             <span>
               <ThumbsUp size={19} weight={userReacted ? "fill" : "bold"} />
 
@@ -289,6 +296,10 @@ const Post: React.FC<PostProps> = ({
           ))}
         </Comments>
       </CommentArea>
+
+      <Modal isOpen={modalReactions} onClose={toggleModalReactions}>
+        <h1>Conteúdo do Modal</h1>
+      </Modal>
     </Container>
   );
 };
