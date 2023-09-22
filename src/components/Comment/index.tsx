@@ -1,14 +1,14 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 import { Trash, ThumbsUp } from "phosphor-react";
 
 import { createReaction, deleteReaction } from "../../services/reactions";
-
 import { IReaction } from "../../services/reactions/types";
 
-import Avatar from "../AvatarSquare";
+import AvatarSquare from "../AvatarSquare";
+import Modal from "../Modal";
+import ReactionList from "../ReactionList";
 
 import { DiffToString } from "../../utils/date";
 
@@ -22,6 +22,7 @@ import {
   Interactions,
   ButtonDelete,
 } from "./styles";
+
 import { toast } from "react-toastify";
 
 interface CommentProps {
@@ -47,14 +48,15 @@ const Comment: React.FC<CommentProps> = ({
   commentedAt,
   onDelete,
 }) => {
-  const navigate = useNavigate();
-  const { user } = useAuthentication();
+  const { user, me } = useAuthentication();
 
   const [commentReactions, setCommentReactions] = useState(reactions);
 
   const [userReacted, setUserReacted] = useState(
     commentReactions.some((reaction) => reaction.user.id === user?.id),
   );
+
+  const [modalReactions, setModalReactions] = useState(false);
 
   const handleCreateReaction = useCallback(async () => {
     try {
@@ -113,21 +115,18 @@ const Comment: React.FC<CommentProps> = ({
     handleCreateReaction();
   }
 
-  function handleMe() {
-    navigate(`/me/${authorId}`);
+  function toggleModalReactions() {
+    setModalReactions(!modalReactions);
   }
 
   return (
     <Container>
-      <Avatar
-        onClick={handleMe}
-        src={authorAvatar || "https://i.imgur.com/HYrZqHy.jpg"}
-      />
+      <AvatarSquare onClick={() => me(user?.id)} avatar={authorAvatar} />
 
       <CommentBox>
         <InputArea>
           <AuthorAndTime>
-            <h1 onClick={handleMe}>{authorName}</h1>
+            <h1 onClick={() => me(user?.id)}>{authorName}</h1>
             <time>
               Cerca de {DiffToString(moment().diff(commentedAt, "seconds"))}
             </time>
@@ -149,9 +148,13 @@ const Comment: React.FC<CommentProps> = ({
             weight={userReacted ? "fill" : "regular"}
           />
           <span>•</span>
-          <span>{commentReactions.length}</span>
+          <span onClick={toggleModalReactions}>{commentReactions.length}</span>
         </Interactions>
       </CommentBox>
+
+      <Modal isOpen={modalReactions} onClose={toggleModalReactions}>
+        <ReactionList data={commentReactions} />
+      </Modal>
     </Container>
   );
 };

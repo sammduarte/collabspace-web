@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+interface ContentProps {
+  $width: string;
+  $height?: string;
+}
+
 export const Container = styled.div`
   position: fixed;
   top: 0;
@@ -14,15 +19,16 @@ export const Container = styled.div`
   background: rgb(0, 0, 0, 0.75);
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<ContentProps>`
   position: relative;
 
-  min-width: 480px;
-  padding: 1rem;
+  width: ${({ $width }) => $width};
+  height: ${({ $height }) => $height};
+
   background: var(--zinc-800);
   border-radius: 8px;
 
-  margin: 2.5rem;
+  margin: 2.5rem 0;
 
   svg {
     position: absolute;

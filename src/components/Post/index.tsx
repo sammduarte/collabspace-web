@@ -1,5 +1,4 @@
 import { useState, useCallback, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { ThumbsUp, ChatCircleText } from "phosphor-react";
 import { toast } from "react-toastify";
 import moment from "moment";
@@ -18,6 +17,7 @@ import Comment from "../Comment";
 import InputArea from "../InputArea";
 import Button from "../Button";
 import Modal from "../Modal";
+import ReactionList from "../ReactionList";
 
 import {
   Container,
@@ -64,8 +64,7 @@ const Post: React.FC<PostProps> = ({
   reactions = [],
   publishedAt,
 }) => {
-  const navigate = useNavigate();
-  const { user } = useAuthentication();
+  const { user, me } = useAuthentication();
 
   const [postComments, setPostComments] = useState(comments);
   const [postReactions, setPostReactions] = useState(reactions);
@@ -196,22 +195,18 @@ const Post: React.FC<PostProps> = ({
     setModalReactions(!modalReactions);
   }
 
-  function handleMe() {
-    navigate(`/me/${authorId}`);
-  }
-
   return (
     <Container>
       <Header>
         <Author>
           <AvatarSquare
-            onClick={handleMe}
-            src={authorAvatar || "https://i.imgur.com/HYrZqHy.jpg"}
+            onClick={() => me(user?.id)}
+            avatar={authorAvatar}
             borderEffect
           />
 
           <AuthorInfo>
-            <h1 onClick={handleMe}>{authorName}</h1>
+            <h1 onClick={() => me(user?.id)}>{authorName}</h1>
             <p>{authorEmail}</p>
           </AuthorInfo>
         </Author>
@@ -298,7 +293,7 @@ const Post: React.FC<PostProps> = ({
       </CommentArea>
 
       <Modal isOpen={modalReactions} onClose={toggleModalReactions}>
-        <h1>Conteúdo do Modal</h1>
+        <ReactionList data={postReactions} />
       </Modal>
     </Container>
   );
