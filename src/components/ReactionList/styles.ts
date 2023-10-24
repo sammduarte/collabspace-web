@@ -22,7 +22,7 @@ export const Navbar = styled.div`
 
 export const Reactions = styled.div`
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar-track {
     background: var(--zinc-900);

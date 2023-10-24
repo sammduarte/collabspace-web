@@ -6,11 +6,11 @@ import { IReaction } from "../../services/reactions/types";
 
 import {
   Container,
+  Title,
   Navbar,
   Reactions,
   Reaction,
   AuthorInfo,
-  Title,
   NoReactions,
 } from "./styles";
 

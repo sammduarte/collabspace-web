@@ -54,8 +54,8 @@ export const Interactions = styled.div`
   gap: 8px;
   padding: 0 8px;
 
-  font-size: 0.875rem;
   color: var(--zinc-400);
+  font-size: 0.875rem;
 
   svg {
     margin-bottom: 2px;

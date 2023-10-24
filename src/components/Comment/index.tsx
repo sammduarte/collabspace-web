@@ -121,12 +121,12 @@ const Comment: React.FC<CommentProps> = ({
 
   return (
     <Container>
-      <AvatarSquare onClick={() => me(user?.id)} avatar={authorAvatar} />
+      <AvatarSquare onClick={() => me(authorId)} avatar={authorAvatar} />
 
       <CommentBox>
         <InputArea>
           <AuthorAndTime>
-            <h1 onClick={() => me(user?.id)}>{authorName}</h1>
+            <h1 onClick={() => me(authorId)}>{authorName}</h1>
             <time>
               Cerca de {DiffToString(moment().diff(commentedAt, "seconds"))}
             </time>

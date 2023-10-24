@@ -52,7 +52,7 @@ interface IUpdateCoverRequest {
   coverUrl: string;
 }
 
-type IUpdateCoverReponse = AppResponse;
+type IUpdateCoverResponse = AppResponse;
 
 export type {
   IUser,
@@ -63,5 +63,5 @@ export type {
   IUpdateAvatarRequest,
   IUpdateAvatarResponse,
   IUpdateCoverRequest,
-  IUpdateCoverReponse,
+  IUpdateCoverResponse,
 };

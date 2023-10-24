@@ -7,6 +7,8 @@ export const Container = styled.div`
 `;
 
 export const Info = styled.div`
+  cursor: pointer;
+
   h1 {
     font-size: 1.125rem;
     color: var(--zinc-200);

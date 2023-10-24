@@ -8,8 +8,8 @@ interface AvatarCircleProps extends ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const AvatarCircle: React.FC<AvatarCircleProps> = ({
-  size = "48px",
   avatar,
+  size = "48px",
   ...rest
 }) => {
   return (

@@ -25,7 +25,7 @@ const Feed: React.FC = () => {
 
       if (result === "error") toast.error(message);
     } catch (error: any) {
-      toast.error(`Erro ao listar posts ${error.message}`);
+      toast.error(error.message);
     }
   }, []);
 
@@ -37,6 +37,9 @@ const Feed: React.FC = () => {
 
       return posts;
     });
+
+  const handleRemovePost = (id: string) =>
+    setPosts((prevState) => prevState.filter((post) => post.id !== id));
 
   useEffect(() => {
     handleListAllPosts();
@@ -63,6 +66,7 @@ const Feed: React.FC = () => {
               comments={post.comments}
               reactions={post.reactions}
               publishedAt={post.publishedAt}
+              onDeletePost={handleRemovePost}
             />
           ))}
         </Posts>

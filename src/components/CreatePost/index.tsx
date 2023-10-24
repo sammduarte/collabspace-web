@@ -1,15 +1,16 @@
 import { useState, useCallback, FormEvent } from "react";
 import { toast } from "react-toastify";
 
-import Avatar from "../AvatarSquare";
+import { useAuthentication } from "../../contexts/Authentication";
+
+import { createPost } from "../../services/posts";
+import { IPost } from "../../services/posts/types";
+
+import AvatarSquare from "../AvatarSquare";
 import InputArea from "../InputArea";
 import Button from "../Button";
 
-import { useAuthentication } from "../../contexts/Authentication";
-
 import { Container, Form } from "./styles";
-import { createPost } from "../../services/posts";
-import { IPost } from "../../services/posts/types";
 
 interface CreatePostProps {
   onCreatePost: (post: IPost) => void;
@@ -45,7 +46,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ onCreatePost }) => {
 
   return (
     <Container>
-      <Avatar
+      <AvatarSquare
         onClick={() => me(user?.id)}
         avatar={user?.avatarUrl}
         borderEffect

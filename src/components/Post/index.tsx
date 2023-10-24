@@ -1,12 +1,14 @@
-import { useState, useCallback, FormEvent } from "react";
-import { ThumbsUp, ChatCircleText } from "phosphor-react";
+import { useState, useEffect, useRef, useCallback, FormEvent } from "react";
+import { ThumbsUp, ChatCircleText, DotsThree, Trash } from "phosphor-react";
 import { toast } from "react-toastify";
+
 import moment from "moment";
 
 import { DiffToString } from "../../utils/date";
 
 import { useAuthentication } from "../../contexts/Authentication";
 
+import { deletePost } from "../../services/posts";
 import { createComment, deleteComment } from "../../services/comments";
 import { createReaction, deleteReaction } from "../../services/reactions";
 import { IComment } from "../../services/comments/types";
@@ -37,6 +39,9 @@ import {
   CommentArea,
   CommentForm,
   Comments,
+  OptionsArea,
+  BoxOptions,
+  Option,
 } from "./styles";
 
 interface PostProps {
@@ -50,6 +55,7 @@ interface PostProps {
   comments: IComment[];
   reactions: IReaction[];
   publishedAt: string;
+  onDeletePost(id: string): void;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -63,6 +69,7 @@ const Post: React.FC<PostProps> = ({
   comments = [],
   reactions = [],
   publishedAt,
+  onDeletePost,
 }) => {
   const { user, me } = useAuthentication();
 
@@ -77,6 +84,41 @@ const Post: React.FC<PostProps> = ({
   );
 
   const [modalReactions, setModalReactions] = useState(false);
+  const [boxOptions, setBoxOption] = useState(false);
+
+  const boxOptionsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        boxOptionsRef.current &&
+        !boxOptionsRef.current.contains(event.target as Node)
+      ) {
+        setBoxOption(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleDeletePost = useCallback(async () => {
+    try {
+      const { result, message } = await deletePost({ id: postId });
+
+      if (result === "success") {
+        onDeletePost(postId);
+        toast.success(message);
+      }
+
+      if (result === "error") toast.error(message);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  }, [postId, onDeletePost]);
 
   const handleCreateComment = useCallback(
     async (e: FormEvent) => {
@@ -195,8 +237,25 @@ const Post: React.FC<PostProps> = ({
     setModalReactions(!modalReactions);
   }
 
+  function toggleBoxOptions() {
+    setBoxOption(!boxOptions);
+  }
+
   return (
     <Container>
+      {authorId === user?.id && (
+        <OptionsArea>
+          <DotsThree size={24} weight="bold" onClick={toggleBoxOptions} />
+
+          <BoxOptions ref={boxOptionsRef} $boxOptions={boxOptions}>
+            <Option onClick={handleDeletePost}>
+              <Trash size={24} weight="fill" />
+              Excluir publicação
+            </Option>
+          </BoxOptions>
+        </OptionsArea>
+      )}
+
       <Header>
         <Author>
           <AvatarSquare
