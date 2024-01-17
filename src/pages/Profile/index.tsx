@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, FormEvent } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import moment from "moment";
 
@@ -33,6 +33,7 @@ import {
   Clock,
   UserCirclePlus,
   UserCircleMinus,
+  Cake,
 } from "phosphor-react";
 
 import {
@@ -59,7 +60,14 @@ import {
   InputEdit,
   ButtonEdit,
   PreviewAvatar,
+  PostList,
+  PostTitle,
 } from "./styles";
+import { maskTelephone } from "../../utils/mask";
+import { listPostById } from "../../services/posts";
+import { IPost } from "../../services/posts/types";
+import Post from "../../components/Post";
+import CreatePost from "../../components/CreatePost";
 
 moment.defineLocale("pt-br", {
   weekdays: "Segunda_Terça_Quarta_Quinta_Sexta_Sábado_Domingo".split("_"),
@@ -72,6 +80,8 @@ moment.defineLocale("pt-br", {
 const Profile: React.FC = () => {
   const { id } = useParams();
 
+  const navigate = useNavigate();
+
   const {
     user: userLogged,
     handleAvatarUrl,
@@ -80,6 +90,7 @@ const Profile: React.FC = () => {
 
   const [user, setUser] = useState<IUser | null>(null);
   const [friends, setFriends] = useState<IFriend[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [requests, setRequests] = useState<IRequest[]>([]);
   const [userLoggedRequests, setUserLoggedRequests] = useState<IRequest[]>([]);
 
@@ -122,6 +133,34 @@ const Profile: React.FC = () => {
       toast.error(error.message);
     }
   }, [id]);
+
+  const handleListPostById = useCallback(async () => {
+    try {
+      if (id) {
+        const { result, message, data } = await listPostById({ id });
+
+        if (result === "success") {
+          if (data) setPosts(data.posts);
+        }
+
+        if (result === "error") toast.error(message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  }, [id]);
+
+  const handleAddPost = (post: IPost) =>
+    setPosts((prevState) => {
+      const posts = [...prevState];
+
+      posts.unshift(post);
+
+      return posts;
+    });
+
+  const handleRemovePost = (id: string) =>
+    setPosts((prevState) => prevState.filter((post) => post.id !== id));
 
   const handleListAllRequestsByUser = useCallback(async () => {
     try {
@@ -292,6 +331,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     handleListUserById();
     handleListAllFriendsByUser();
+    handleListPostById();
     handleListAllRequestsByUser();
     handleListAllRequestsByUserLogged();
   }, [
@@ -299,6 +339,7 @@ const Profile: React.FC = () => {
     relationship,
     handleListUserById,
     handleListAllFriendsByUser,
+    handleListPostById,
     handleListAllRequestsByUser,
     handleListAllRequestsByUserLogged,
   ]);
@@ -375,7 +416,7 @@ const Profile: React.FC = () => {
               </div>
 
               {isOwner && (
-                <EditInfoButton>
+                <EditInfoButton onClick={() => navigate(`/profile`)}>
                   <PencilSimple size={22} weight="bold" />
                 </EditInfoButton>
               )}
@@ -388,10 +429,18 @@ const Profile: React.FC = () => {
 
                 <Total>
                   <span>
-                    <strong>115</strong> publicações
+                    <strong> {posts.length} </strong>{" "}
+                    {posts.length === 1 ? "publicação" : "publicações"}
                   </span>
                   <span>
-                    <strong>{friends.length}</strong> amigos
+                    {friends.length !== 0 ? (
+                      <>
+                        <strong>{friends.length}</strong>{" "}
+                        {friends.length === 1 ? "amigo" : "amigos"}
+                      </>
+                    ) : (
+                      <b>Nenhum amigo</b>
+                    )}
                   </span>
                 </Total>
 
@@ -443,17 +492,27 @@ const Profile: React.FC = () => {
               </General>
 
               <Contact>
-                <span>
-                  <MapPin size={20} weight="bold" />
-                  Jaborandi, São Paulo, Brasil
-                </span>
+                {user?.address?.[0] && (
+                  <span>
+                    <MapPin size={20} weight="bold" />
+                    {user?.address?.[0]?.city}, {user?.address[0].province}{" "}
+                    {user?.address?.[0]?.country}
+                  </span>
+                )}
 
                 {user?.telephone && (
                   <span>
                     <Phone size={20} weight="bold" />
-                    {user.telephone}
+                    {maskTelephone(user.telephone)}
                   </span>
                 )}
+
+                <span>
+                  <Cake size={20} weight="bold" />
+                  {moment(user?.birthDate).format(
+                    "[Nasceu em] DD [de] MMMM [de] YYYY",
+                  )}
+                </span>
 
                 <span>
                   <Clock size={20} weight="bold" />
@@ -493,6 +552,33 @@ const Profile: React.FC = () => {
               <button>Ver todos os amigos</button>
             </AreaFriendButton>
           </Friends>
+
+          {isOwner ? (
+            <CreatePost onCreatePost={handleAddPost} />
+          ) : (
+            <PostTitle>
+              <h1>{`Publicações de ${user?.name}`}</h1>
+            </PostTitle>
+          )}
+
+          <PostList>
+            {posts.map((post) => (
+              <Post
+                key={post.id}
+                authorId={post.user.id}
+                authorAvatar={post.user.avatarUrl}
+                authorName={post.user.name}
+                authorEmail={post.user.email}
+                postId={post.id}
+                content={post.content}
+                tags={post.tags}
+                comments={post.comments}
+                reactions={post.reactions}
+                publishedAt={post.publishedAt}
+                onDeletePost={handleRemovePost}
+              />
+            ))}
+          </PostList>
         </Content>
 
         <Sidebar>

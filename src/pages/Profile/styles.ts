@@ -195,6 +195,30 @@ export const FriendList = styled.div`
   margin: 2rem 0;
 `;
 
+export const PostTitle = styled.div`
+  background: var(--zinc-800);
+  border-radius: 8px;
+  padding: 1.5rem;
+
+  h1 {
+    font-size: 1.375rem;
+    color: var(--zinc-200);
+    font-weight: 600;
+  }
+`;
+
+export const PostList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.375rem;
+    color: var(--zinc-200);
+    font-weight: 600;
+  }
+`;
+
 export const AreaFriendButton = styled.div`
   display: flex;
   justify-content: center;

@@ -6,6 +6,7 @@ import {
   IDeletePostRequest,
   IDeletePostResponse,
   IListAllPostsResponse,
+  IListPostByIdRequest,
 } from "./types";
 
 const createPost = async ({
@@ -48,4 +49,17 @@ const listAllPosts = async (
   return response.data;
 };
 
-export { createPost, deletePost, listAllPosts };
+const listPostById = async ({
+  id,
+  page = 0,
+  limit = 10,
+}: IListPostByIdRequest): Promise<IListAllPostsResponse> => {
+  const response = await api
+    .post(`/posts/listByUser?page=${page}&limit=${limit}`, { id })
+    .then((res) => res)
+    .catch((err) => err);
+
+  return response.data;
+};
+
+export { createPost, deletePost, listAllPosts, listPostById };

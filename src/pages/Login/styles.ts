@@ -39,16 +39,16 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   height: 48px;
-  background: var(--zinc-800);
+  background: var(--zinc-700);
   color: var(--zinc-300);
-  font-size: 1rem;
+  font-size: 14px;
   padding: 1.25rem 1rem;
   border-radius: 4px;
   border: 0;
   outline: 0;
 
-  ::placeholder {
-    color: ar(--zinc-500);
+  &::placeholder {
+    color: ar(--zinc-400);
   }
 `;
 
